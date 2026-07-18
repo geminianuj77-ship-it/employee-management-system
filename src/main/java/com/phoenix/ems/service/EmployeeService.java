@@ -22,4 +22,23 @@ public class EmployeeService {
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
+         public Employee getEmployeeById(Long id) {
+               return employeeRepository.findById(id)
+                 .orElseThrow(() -> new RuntimeException("Employee not found"));
+}
+    public Employee updateEmployee(Long id, Employee employee) {
+
+    Employee existingEmployee = employeeRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Employee not found"));
+
+    existingEmployee.setFirstName(employee.getFirstName());
+    existingEmployee.setLastName(employee.getLastName());
+    existingEmployee.setEmail(employee.getEmail());
+    existingEmployee.setSalary(employee.getSalary());
+
+    return employeeRepository.save(existingEmployee);
+} 
+public void deleteEmployee(Long id) {
+    employeeRepository.deleteById(id);
+}
 }
