@@ -10,6 +10,9 @@ services:
     ports:
       - "3306:3306"
 
+    volumes:
+      - mysql-data:/var/lib/mysql
+
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
       interval: 10s
@@ -17,7 +20,7 @@ services:
       retries: 10
 
   app:
-    image: employee-management-system:v2
+    build: .
     container_name: ems-container
 
     environment:
@@ -31,3 +34,6 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+
+volumes:
+  mysql-data:
