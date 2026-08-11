@@ -20,7 +20,7 @@ services:
       retries: 10
 
   app:
-    build: .
+    image: ghcr.io/geminianuj77-ship-it/employee-management-system:${IMAGE_TAG}
     container_name: ems-container
 
     environment:
