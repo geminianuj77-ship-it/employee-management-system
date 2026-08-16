@@ -33,3 +33,13 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Local / backup files
+*.backup
+*.bak
+
+# Local Spring configuration
+application-local.properties
+
+# GitHub Actions self-hosted runner
+actions-runner/

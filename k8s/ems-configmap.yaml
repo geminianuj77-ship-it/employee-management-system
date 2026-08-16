@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ems-config
+data:
+  SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/employee_db
+  SPRING_DATASOURCE_USERNAME: root
