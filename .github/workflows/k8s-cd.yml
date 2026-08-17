@@ -34,7 +34,7 @@ jobs:
         run: |
           URL=$(minikube service ems --url)
           echo "EMS URL: $URL"
-          curl --fail --retry 10 --retry-delay 5 "$URL/actuator/health"
+          curl --fail --retry 10 --retry-delay 5 --retry-connrefused "$URL/actuator/health"
 
       - name: Verify final deployment
         run: |
