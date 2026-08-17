@@ -28,7 +28,7 @@ jobs:
 
       - name: Wait for rollout
         run: |
-          kubectl rollout status deployment/ems --timeout=180s
+          kubectl rollout status deployment/ems --timeout=600s
 
       - name: Health check
         run: |
