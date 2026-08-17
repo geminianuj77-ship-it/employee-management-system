@@ -15,7 +15,7 @@ spec:
       containers:
         - name: ems
           image: employee-management-system:v4
-          imagePullPolicy: Never
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:

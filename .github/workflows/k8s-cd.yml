@@ -17,3 +17,19 @@ jobs:
         run: |
           kubectl config current-context
           kubectl get nodes
+
+      - name: Set image
+        run: echo "IMAGE=ghcr.io/${{ github.repository }}:${{ github.sha }}" >> "$GITHUB_ENV"
+
+      - name: Deploy EMS to Kubernetes
+        run: |
+          kubectl set image deployment/ems ems="$IMAGE"
+
+      - name: Wait for rollout
+        run: |
+          kubectl rollout status deployment/ems --timeout=180s
+
+      - name: Health check
+        run: |
+          URL=$(minikube service ems --url)
+          curl --fail --retry 10 --retry-delay 5 "$URL/actuator/health"
