@@ -1,0 +1,19 @@
+name: Kubernetes CD
+
+on:
+  push:
+    branches:
+      - v2-development
+
+jobs:
+  deploy-k8s:
+    runs-on: [self-hosted, Linux, X64, ems, production]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Verify Kubernetes
+        run: |
+          kubectl config current-context
+          kubectl get nodes
