@@ -10,9 +10,6 @@ jobs:
     runs-on: [self-hosted, Linux, X64, ems, production]
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Verify Kubernetes
         run: |
           kubectl config current-context
