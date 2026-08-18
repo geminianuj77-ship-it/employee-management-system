@@ -1,42 +1,7 @@
-name: Kubernetes CD
-
-on:
-  push:
-    branches:
-      - v2-development
-
-jobs:
-  deploy-k8s:
-    runs-on: [self-hosted, Linux, X64, ems, production]
-
-    steps:
-      - name: Verify Kubernetes
-        run: |
-          kubectl config current-context
-          kubectl get nodes
-          kubectl get pods
-          kubectl get svc ems
-
-      - name: Set image
-        run: |
-          echo "IMAGE=ghcr.io/${{ github.repository }}:${{ github.sha }}" >> "$GITHUB_ENV"
-
-      - name: Deploy EMS to Kubernetes
-        run: |
-          echo "Deploying image: $IMAGE"
-          kubectl set image deployment/ems ems="$IMAGE"
-
-      - name: Wait for rollout
-        run: |
-          kubectl rollout status deployment/ems --timeout=600s
-
       - name: Health check
         run: |
-          URL=$(minikube service ems --url)
-          echo "EMS URL: $URL"
-          curl --fail --retry 10 --retry-delay 5 --retry-connrefused "$URL/actuator/health"
+          INGRESS_IP=$(minikube ip)
+          echo "Ingress IP: $INGRESS_IP"
+          curl --fail --retry 10 --retry-delay 5 --retry-connrefused \
+            "http://$INGRESS_IP/actuator/health"
 
-      - name: Verify final deployment
-        run: |
-          kubectl get pods -o wide
-          kubectl get svc ems
